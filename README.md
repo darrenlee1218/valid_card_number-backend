@@ -17,8 +17,12 @@ CREATE TABLE cards (
 ```
 
 run backend
+
 ```bash
-cd server
+npm install
+```
+
+```bash
 node server.js
 ```
 
