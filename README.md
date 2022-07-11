@@ -2,7 +2,7 @@ BACKEND
 
 - Install postgresql 
 
-- add `DATABASE_URL=postgres://postgres:123456789@localhost:5432/postgres` to server/.env file
+- add `DATABASE_URL=postgres://postgres:123456789@localhost:5432/postgres` to .env file
 
   postgres:123456789 => DB name:password
 
