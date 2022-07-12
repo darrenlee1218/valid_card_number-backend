@@ -12,17 +12,23 @@ exports.createCard = async (req, res) => {
     }
   }
 
-  const { rows } = await db.query(
-    "INSERT INTO cards (card_number, amount) VALUES ($1, $2)",
-    [lastNumber, amount]
-  );
+  try {
+    const { rows } = await db.query(
+      "INSERT INTO cards (card_number, amount) VALUES ($1, $2)",
+      [lastNumber, amount]
+    );
 
-  res.status(201).send({
-    message: "Card added successfully!",
-    body: {
-      card: { lastNumber, amount },
-    },
-  });
+    res.status(201).send({
+      message: "Card added successfully!",
+      body: {
+        card: { lastNumber, amount },
+      },
+    });
+  } catch (e) {
+    res.status(500).send({
+      message: e.message,
+    });
+  }
 };
 
 exports.listAllCards = async (req, res) => {
@@ -38,7 +44,13 @@ exports.listAllCards = async (req, res) => {
 
 exports.deleteCardById = async (req, res) => {
   const cardId = parseInt(req.params.id);
-  await db.query("DELETE FROM cards WHERE card_id = $1", [cardId]);
+  try {
+    await db.query("DELETE FROM cards WHERE card_id = $1", [cardId]);
 
-  res.status(200).send({ message: "Card deleted successfully!", cardId });
+    res.status(200).send({ message: "Card deleted successfully!", cardId });
+  } catch (e) {
+    res.status(500).send({
+      message: e.message,
+    });
+  }
 };
