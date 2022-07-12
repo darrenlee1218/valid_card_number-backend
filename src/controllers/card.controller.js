@@ -26,8 +26,14 @@ exports.createCard = async (req, res) => {
 };
 
 exports.listAllCards = async (req, res) => {
-  const response = await db.query("SELECT * FROM cards ORDER BY amount DESC");
-  res.status(200).send(response.rows);
+  try {
+    const response = await db.query("SELECT * FROM cards ORDER BY amount DESC");
+    res.status(200).send(response.rows);
+  } catch (e) {
+    res.status(500).send({
+      message: e.message,
+    });
+  }
 };
 
 exports.deleteCardById = async (req, res) => {
